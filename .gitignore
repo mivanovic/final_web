@@ -1,0 +1,9 @@
+*.DS_Store
+*.pyc
+*.png
+*.jpg
+*.ico
+*.sqlite3
+*.fcgi
+node_modules/
+.idea/
