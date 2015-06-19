@@ -75,6 +75,7 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+
 # Email settings
 
 EMAIL_USE_TLS = False
@@ -85,6 +86,7 @@ EMAIL_HOST_PASSWORD = secret_settings.EMAIL_HOST_PASSWORD
 EMAIL_PORT = secret_settings.EMAIL_PORT
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
@@ -103,6 +105,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'finalweb.context_processors.constants',
     'django.contrib.auth.context_processors.auth',
 )
+
+# Global variables
 
 JQUERY_VERSION = '2.1.4'
 BOOTSTRAP_VERSION = '3.3.4'
