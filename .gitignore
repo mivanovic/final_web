@@ -8,4 +8,4 @@
 node_modules/
 img/
 .idea/
-/settings_secret.py
+/secret_settings.py
