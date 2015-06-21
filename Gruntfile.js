@@ -37,7 +37,7 @@ module.exports = function(grunt) {
     uglify: {
       my_target: {
         files: {
-          'js/output.min.js': [
+          'static/js/output.min.js': [
                                 'static/js/jquery-migrate-1.2.1.js',
                                 'static/js/jquery.ui.totop.js'
                                 ]
