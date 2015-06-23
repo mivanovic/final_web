@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block main_content %}
+
+<div class="global">
+    <!--content-->
+    <div class="container">
+        <div class="row">
+            <article class="col-lg-12 col-md-12 col-sm-12 galleryBox">
+                <div>
+                    <div class="row">
+                        <article>
+                            <div class="thumb-pad3">
+                                <figure class="col-lg-6 col-md-6 col-sm-6">
+                                    <img src="/{% firstof images.0.file 'static/img/image_not_available.png' %}" alt=""/>
+                                </figure>
+                                <figure class="col-lg-6 col-md-6 col-sm-6">
+                                    <h3>{{ data.name }}</h3>
+                                    <h4>Lokacija</h4>
+                                    <p>{{data.location}}</p>
+                                    <h4>Naručitelj</h4>
+                                    <p>{{data.customer}}</p>
+                                    <h4>Vrijeme izvodjenja</h4>
+                                    <p>{{data.time}}</p>
+                                    <h4>Opis radova</h4>
+                                    <p>{{data.description}}</p>
+                                </figure>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
+
+{% endblock main_content %}

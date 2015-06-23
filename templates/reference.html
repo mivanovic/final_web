@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block main_content %}
+
+<div class="global">
+    <!--content-->
+    <div class="container">
+        <div class="row">
+            <article class="col-lg-12 col-md-12 col-sm-12 galleryBox">
+                <div>
+                    <h3>Reference</h3>
+                    <div class="row">
+                        {% for reference in references_list %}
+                        <article class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="thumb-pad3">
+                                <div class="thumbnail">
+                                    <figure>
+                                        {% with reference.refimages_set.all|first as img %}
+                                        <a href="{% url 'reference_id' reference.id %}">
+                                            <img  class="lazy" data-original="/{% firstof img.file 'static/img/image_not_available.png' %}" alt=""
+                                                 title="{{reference.description}}">
+                                        </a>
+                                        {% endwith %}
+                                    </figure>
+                                    <div class="caption maxheight">
+                                        <p class="text-center">{{ reference.name }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        {% endfor %}
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
+
+{% endblock main_content %}
+
+{% block extra_scripts%}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/{{LAZYLOAD_VERSION}}/jquery.lazyload.min.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+        $(function() {
+            $("img.lazy").lazyload({
+                effect : "fadeIn"
+            });
+        });
+  </script>
+{% endblock extra_scripts %}

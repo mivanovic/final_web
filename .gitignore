@@ -4,6 +4,6 @@
 *.sqlite3
 *.fcgi
 node_modules/
-images/
+img/
 .idea/
 secret_settings.py

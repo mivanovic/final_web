@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block main_content %}
+
+<div class="global">
+    <div class="container">
+        <div class="row">
+            <article class="col-lg-12 col-md-12 col-sm-12 form-box">
+                <div>
+                    <h3>Kontaktirajte nas</h3>
+                    <figure class="map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11573.893379697762!2d16.497560877610972!3d43.51332108470659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13355fbedcf87a4f%3A0xecc6ddfefff8b2db!2sPut+Svetog+I%C5%BEidora+65%2C+21000%2C+Split!5e0!3m2!1shr!2shr!4v1425320335639" width="600" height="450" frameborder="0" style="border:0"></iframe>
+                    </figure>
+                </div>
+            </article>
+            <article class="col-lg-4 col-md-4 col-sm-4 info-box">
+                <div class="maxheight">
+                    <h3>Informacije</h3>
+                    <div class="info">
+                        <h4>Adresa</h4>
+                        <p>Final, obrt za usluge<br>Put Sv. Izidora 65, 21000 Split</p>
+                        <h4>Kontakt</h4>
+                        <p>Mobitel:<br>+385 98 858 897</p>
+                        <p>Telefon:<br> +385 21 373 256</p>
+                        <p>Fax:<br>+385 21 271 972</p>
+                        <p>Email:<br>finalsplit@gmail.com</p>
+                    </div>
+                </div>
+            </article>
+            <article class="col-lg-8 col-md-8 col-sm-8 contactBox">
+                <div class="maxheight">
+                    <h3>Kontakt Forma</h3>
+                    <form id="contact-form" method="post" action="/contact/send/">{% csrf_token %}
+                        <div class="success-message">Contact form submitted.</div>
+                        <div class="holder">
+                            <div class="form-div-1 clearfix">
+                                <label class="name">
+                                    <input type="text" placeholder="Ime*" data-constraints="@Required @JustLetters" name="name" class="form-control" maxlength="30"/>
+                                    <span class="empty-message">*Polje je obavezno.</span>
+                                    <span class="error-message">*This is not a valid name.</span>
+                                </label>
+                            </div>
+                            <div class="form-div-2 clearfix">
+                                <label class="email">
+                                    <input type="text" placeholder="E-mail*" data-constraints="@Required @Email" name="email" class="inputtext form-control" maxlength="50"/>
+                                    <span class="empty-message">*This field is required.</span>
+                                    <span class="error-message">*This is not a valid email.</span>
+                                </label>
+                            </div>
+                            <div class="form-div-3 clearfix">
+                                <label class="phone notRequired">
+                                    <input type="text" placeholder="Telefon" data-constraints="@JustNumbers" class="form-control" name="phone"/>
+                                    <span class="empty-message">*Polje je obavezno</span>
+                                    <span class="error-message">*This is not a valid phone.</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-div-4 clearfix">
+                            <label class="message">
+                                <textarea name="message" placeholder="Komentar*" data-constraints='@Required @Length(min=20,max=999999)' class="form-control"></textarea>
+                                <span class="empty-message">*Polje je obavezno</span>
+                                <span class="error-message">*The message is too short.</span>
+                            </label>
+                        </div>
+                        <div class="btns">
+                            <input class="submitform btn-default btn1" type="submit" name="submitform" value="Posalji" />
+                        </div>
+                    </form>
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
