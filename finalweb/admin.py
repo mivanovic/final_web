@@ -6,6 +6,8 @@ class ImageInline(admin.TabularInline):
     model = RefImages
     extra = 0
 
+    readonly_fields = ('thumbnail', )
+
 
 class ReferenceAdmin(admin.ModelAdmin):
     inlines = [ImageInline]
