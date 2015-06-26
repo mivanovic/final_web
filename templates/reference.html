@@ -19,7 +19,7 @@
                                     <figure>
                                         {% with reference.refimages_set.all|first as img %}
                                         <a href="{% url 'reference_id' reference.id %}">
-                                            <img  class="lazy" data-original="/{% firstof img.file 'static/img/image_not_available.png' %}" alt=""
+                                            <img  class="lazy" data-original="/{% firstof img.thumbnail 'static/img/image_not_available.png' %}" alt=""
                                                  title="{{reference.description}}">
                                         </a>
                                         {% endwith %}

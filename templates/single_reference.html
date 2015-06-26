@@ -12,7 +12,17 @@
                         <article>
                             <div class="thumb-pad3">
                                 <figure class="col-lg-8 col-md-6 col-sm-6">
-                                    <img src="/{% firstof images.0.file 'static/img/image_not_available.png' %}" alt=""/>
+                                    <div class="list_carousel2 responsive clearfix">
+	                                    <ul id="foo2">
+                                            {% if images %}
+                                                {% for img in images %}
+                                                    <li><img src="/{{ img.file }}" alt=""/></li>
+                                                {% endfor %}
+                                            {% else %}
+                                                <li><img src="/static/img/image_not_available.png" alt=""/></li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
                                 </figure>
                                 <figure class="col-lg-4 col-md-6 col-sm-6">
                                     <h3>{{ data.name }}</h3>
