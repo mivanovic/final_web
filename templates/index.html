@@ -32,7 +32,7 @@
 	        <div>
 	            <h3>Najnovije</h3>
 	            <figure>
-					<img src="{{ newest.refimages_set.all.0.file }}" alt="">
+					<img src="/{% firstof newest.refimages_set.all.0.thumbnail 'static/images/image_not_available_thumbnail.png' %}" alt="">
 				</figure>
 	            <p>{{ newest.name }}, {{ newest.location|capfirst }}</p>
 	            <div>
