@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.encoding import smart_unicode
 from django.core.validators import MaxValueValidator, MinValueValidator
-from PIL import Image
+from PIL import Image, ImageOps
 from cStringIO import StringIO
 from django.core.files.uploadedfile import SimpleUploadedFile
 import os
@@ -50,8 +50,8 @@ class RefImages(models.Model):
     thumbnail = models.ImageField(upload_to=get_file_path, null=True, blank=True)
 
     def create_thumbnail(self):
-        thumb_width = 400
-        thumb_height = 400
+        thumb = (400, 400)
+        # thumb_height = 400
 
         django_type = self.image.file.content_type
 
@@ -64,23 +64,7 @@ class RefImages(models.Model):
 
         image = Image.open(StringIO(self.image.read()))
 
-        src_width, src_height = image.size
-        src_ratio = float(src_width) / float(src_height)
-        dst_ratio = float(thumb_width) / float(thumb_height)
-
-        if dst_ratio < src_ratio:
-            crop_height = src_height
-            crop_width = crop_height * dst_ratio
-            x_offset = int(float(src_width - crop_width) / 2)
-            y_offset = 0
-        else:
-            crop_width = src_width
-            crop_height = crop_width / dst_ratio
-            x_offset = 0
-            y_offset = int(float(src_height - crop_height) / 3)
-
-        image = image.crop((x_offset, y_offset, x_offset+int(crop_width), y_offset+int(crop_height)))
-        image = image.resize((thumb_width, thumb_height), Image.ANTIALIAS)
+        image = ImageOps.fit(image, thumb, method=Image.ANTIALIAS)
 
         temp_handle = StringIO()
         image.save(temp_handle, pil_type)
