@@ -1,9 +1,9 @@
 from django.db import models
 from django.utils.encoding import smart_unicode
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.files.uploadedfile import SimpleUploadedFile
 from PIL import Image, ImageOps
 from cStringIO import StringIO
-from django.core.files.uploadedfile import SimpleUploadedFile
 import os
 
 
@@ -17,7 +17,8 @@ class Quote(models.Model):
 
 class Reference(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
-    complexity = models.PositiveIntegerField(default=0, null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(99)])
+    complexity = models.PositiveIntegerField(default=0, null=True, blank=True,
+                                             validators=[MinValueValidator(0), MaxValueValidator(99)])
     newest = models.BooleanField(default=False)
 
     location = models.CharField(max_length=100, null=True, blank=True)
@@ -51,7 +52,6 @@ class RefImages(models.Model):
 
     def create_thumbnail(self):
         thumb = (400, 400)
-        # thumb_height = 400
 
         django_type = self.image.file.content_type
 
@@ -63,7 +63,6 @@ class RefImages(models.Model):
             file_extension = 'png'
 
         image = Image.open(StringIO(self.image.read()))
-
         image = ImageOps.fit(image, thumb, method=Image.ANTIALIAS)
 
         temp_handle = StringIO()
