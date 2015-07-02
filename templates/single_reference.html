@@ -1,47 +1,40 @@
 {% extends 'base.html' %}
 
 {% block main_content %}
-
-<div class="global">
-    <!--content-->
-    <div class="container">
-        <div class="row">
-            <article class="col-lg-12 col-md-12 col-sm-12 galleryBox">
-                <div>
-                    <div class="row">
-                        <article>
-                            <div class="thumb-pad3">
-                                <figure class="col-lg-8 col-md-6 col-sm-6">
-                                    <div class="list_carousel2 responsive clearfix">
-	                                    <ul id="foo2">
-                                            {% if images %}
-                                                {% for img in images %}
-                                                    <li><img src="/{{ img.image }}" alt=""/></li>
-                                                {% endfor %}
-                                            {% else %}
-                                                <li><img src="/static/images/image_not_available_thumbnail.png" alt=""/></li>
-                                            {% endif %}
-                                        </ul>
-                                    </div>
-                                </figure>
-                                <figure class="col-lg-4 col-md-6 col-sm-6">
-                                    <h3>{{ data.name }}</h3>
-                                    <h4>Lokacija</h4>
-                                    <p>{{data.location}}</p>
-                                    <h4>Naručitelj</h4>
-                                    <p>{{data.customer}}</p>
-                                    <h4>Vrijeme izvodjenja</h4>
-                                    <p>{{data.time}}</p>
-                                    <h4>Opis radova</h4>
-                                    <p>{{data.description}}</p>
-                                </figure>
-                            </div>
-                        </article>
+    <div class="global">
+        <div class="container">
+            <div class="row">
+                <article class="col-lg-12 col-md-12 col-sm-12 galleryBox">
+                    <div>
+                        <div class="row">
+                            <article>
+                                <div class="thumb-pad3">
+                                    <figure class="col-lg-8 col-md-6 col-sm-6">
+                                        <div class="list_carousel2 responsive clearfix">
+                                            <ul id="foo2">
+                                                {% if images %}
+                                                    {% for img in images %}
+                                                        <li><img src="/{{ img.image }}" alt=""/></li>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <li><img src="/static/images/image_not_available_thumbnail.png" alt=""/></li>
+                                                {% endif %}
+                                            </ul>
+                                        </div>
+                                    </figure>
+                                    <figure class="col-lg-4 col-md-6 col-sm-6">
+                                        <h3>{{ data.name }}</h3>
+                                        <h4>Lokacija</h4><p>{{data.location}}</p>
+                                        <h4>Naručitelj</h4><p>{{data.customer}}</p>
+                                        <h4>Vrijeme izvodjenja</h4><p>{{data.time}}</p>
+                                        <h4>Opis radova</h4><p>{{data.description}}</p>
+                                    </figure>
+                                </div>
+                            </article>
+                        </div>
                     </div>
-                </div>
-            </article>
+                </article>
+            </div>
         </div>
     </div>
-</div>
-
 {% endblock main_content %}
