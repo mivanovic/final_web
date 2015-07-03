@@ -23,3 +23,10 @@ $(window).load(function() {
 		});
 	});
 });
+
+$(document).ready(function() {
+	if('ontouchstart' in document.documentElement){
+		$('.lazy').css({filter:'none', '-webkit-filter':'none'});
+	}
+
+});
