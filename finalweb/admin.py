@@ -14,4 +14,5 @@ class ReferenceAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Quote)
+admin.site.register(Questions)
 admin.site.register(Reference, ReferenceAdmin)

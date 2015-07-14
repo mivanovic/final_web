@@ -1,10 +1,12 @@
 from finalweb.models import *
 from django.views.generic import TemplateView, FormView
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.core.mail import send_mail
 from finalweb.forms import EmailForm
 from finalst import settings
-from django import forms
+from django.shortcuts import render, render_to_response
+import json
+from django.views.decorators.csrf import csrf_protect
 
 
 class IndexView(TemplateView):
@@ -21,10 +23,6 @@ class IndexView(TemplateView):
         return context
 
 
-class ContactView(TemplateView):
-    template_name = 'contact.html'
-
-
 class ReferencesView(TemplateView):
     queryset = Reference.objects.order_by('-complexity')
     context_object_name = 'references_list'
@@ -32,7 +30,7 @@ class ReferencesView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ReferencesView, self).get_context_data(**kwargs)
-        context['references_list'] = self.queryset
+        context[self.context_object_name] = self.queryset
         return context
 
 
@@ -46,7 +44,7 @@ class SingleReferenceView(TemplateView):
         return context
 
 
-class SendMail(TemplateView, FormView):
+class ContactView(TemplateView, FormView):
     form_class = EmailForm
     template_name = 'contact.html'
 
@@ -59,12 +57,64 @@ class SendMail(TemplateView, FormView):
             phone = form.cleaned_data['phone']
             message = form.cleaned_data['message']
 
-            try:
-                send_mail(name + " <" + email + ">", message + ' telefon:' + phone, email, [settings.EMAIL_HOST_USER])
-            except forms.ValidationError:
+            report = "Od: {0} '<{1}>'\r\nPoruka: {2}\r\nTelefon: {3}".format(name, email, message, phone)
+
+            send_mail('Final-st.hr kontakt forma', report, email, [settings.EMAIL_HOST_USER])
+
+            if request.is_ajax():
+                return HttpResponse('OK')
+            else:
+                pass
+        else:
+            if request.is_ajax():
+                errors_dict = {}
+                if form.errors:
+                    for error in form.errors:
+                        e = form.errors[error]
+                        errors_dict[error] = unicode(e)
+
+                return HttpResponseBadRequest(json.dumps(errors_dict))
+            else:
                 pass
 
-            return HttpResponseRedirect('/contact/')
+        return render(request, self.template_name, {'form': form})
 
-        return HttpResponseRedirect('/contact/')
+
+class QuestionsView(TemplateView):
+    template_name = 'questions.html'
+    queryset = Questions.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(QuestionsView, self).get_context_data(**kwargs)
+        context['questions'] = self.queryset
+        return context
+
+from django.core.context_processors import csrf
+def my_view(request):
+    c = {}
+    c.update(csrf(request))
+    c['questions'] = Questions.objects.all()
+
+    return render_to_response('questions.html', c)
+
+
+class MaterialsView(TemplateView):
+    template_name = 'materials.html'
+
+
+def search(request):
+    template_name = 'questions.html'
+
+    search_text = ''
+
+    # def post(self, request, *args, **kwargs):
+    if request.method == 'POST':
+        search_text = request.POST['search_text']
+
+    result = Questions.objects.filter(question__contains=search_text).filter(answer_contains=search_text)
+
+    return render_to_response('ajax_search.html', {'result': result})
+
+
+
 

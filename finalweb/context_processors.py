@@ -11,4 +11,8 @@ def constants(request):
         'BOOTSTRAP_VERSION': settings.BOOTSTRAP_VERSION,
         'RESPOND_VERSION': settings.RESPOND_VERSION,
         'LAZYLOAD_VERSION': settings.LAZYLOAD_VERSION,
+
+        'MOBILE_PHONE': settings.MOBILE_PHONE,
+        'PHONE': settings.PHONE,
+        'FAX_PHONE': settings.FAX_PHONE,
     }

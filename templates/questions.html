@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block main_content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+    <div class="global">
+        <div class="container">
+            <div class="row">
+                <article class="col-lg-12 col-md-12 col-sm-12 form-box">
+                    <div>
+                        <h3>Pitanja & Savjeti</h3>
+                        <div class="row">
+                            {% for question in questions %}
+                            <article class="col-sm-10 col-sm-offset-1">
+                                <h4 style="color:#337ab7;">{{ question.question }}</h4>
+                                <h5>{{ question.answer }}</h5>
+                            </article>
+                            {% endfor %}
+                        </div>
+                        <div>
+                            <a href="/contact#contact-form" class="btn-default btn1">Postavi pitanje</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+{% endblock main_content %}

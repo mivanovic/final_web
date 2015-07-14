@@ -95,13 +95,13 @@
                             <div class="box1">
                                 <figure><img src="{% static 'images/page1_pic1.jpg' %}" alt=""></figure>
                                 <div class="caption maxheight">
-                                   <h2 class="maxheight2">Savjeti & Preporuke</h2>
-                                   <a href=""></a>
+                                    <h2 class="maxheight2">Pitanja & Savjeti</h2>
+                                    <a href="{% url 'questions' %}"></a>
                                </div>
                             </div>
                             <div class="box2">
                                 <div class="caption maxheight">
-                                    <a href="/contact/"></a>
+                                    <a href="{% url 'contact' %}"></a>
                                     <h2 class="">Kontakt</h2>
                                 </div>
                                 <figure><img src="{% static 'images/page1_pic2.jpg' %}" alt=""></figure>
@@ -109,8 +109,8 @@
                             <div class="box1">
                                 <figure><img src="{% static 'images/page1_pic3.jpg' %}" alt=""></figure>
                                 <div class="caption maxheight">
-                                   <h2 class="maxheight2">Oprema</h2>
-                                   <a href=""></a>
+                                    <h2 class="maxheight2">Oprema</h2>
+                                    <a href=""></a>
                                </div>
                             </div>
                         </article>
@@ -124,7 +124,7 @@
                                     <div>
                                         <figure><img src="{% static 'images/page1_pic5.png' %}" alt=""></figure>
                                         <div>
-                                            <a href="#" class="btn-default btn1">više</a>
+                                            <a href="{% url 'materials' %}" class="btn-default btn1">više</a>
                                         </div>
                                     </div>
                                 </article>

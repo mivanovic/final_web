@@ -19,9 +19,9 @@
                             <h4>Adresa</h4>
                             <p>Final, obrt za usluge<br>Put Sv. Izidora 65, 21000 Split</p>
                             <h4>Kontakt</h4>
-                            <p>Mobitel:<br>+385 98 858 897</p>
-                            <p>Telefon:<br> +385 21 373 256</p>
-                            <p>Fax:<br>+385 21 271 972</p>
+                            <p>Mobitel:<br>{{MOBILE_PHONE}}</p>
+                            <p>Telefon:<br>{{PHONE}}</p>
+                            <p>Fax:<br>{{FAX_PHONE}}</p>
                             <p>Email:<br>finalsplit@gmail.com</p>
                         </div>
                     </div>
@@ -29,40 +29,44 @@
                 <article class="col-lg-8 col-md-8 col-sm-8 contactBox">
                     <div class="maxheight">
                         <h3>Kontakt Forma</h3>
-                        <form id="contact-form" method="post" action="/contact/send/">{% csrf_token %}
-                            <div class="success-message">Contact form submitted.</div>
+                        <form id="contact-form" method="post" action="{% url 'contact' %}">{% csrf_token %}
                             <div class="holder">
                                 <div class="form-div-1 clearfix">
                                     <label class="name">
                                         <input type="text" placeholder="Ime*" data-constraints="@Required @JustLetters" name="name" class="form-control" maxlength="30"/>
-                                        <span class="empty-message">*Polje je obavezno.</span>
-                                        <span class="error-message">*This is not a valid name.</span>
                                     </label>
                                 </div>
                                 <div class="form-div-2 clearfix">
                                     <label class="email">
                                         <input type="text" placeholder="E-mail*" data-constraints="@Required @Email" name="email" class="inputtext form-control" maxlength="50"/>
-                                        <span class="empty-message">*This field is required.</span>
-                                        <span class="error-message">*This is not a valid email.</span>
                                     </label>
                                 </div>
                                 <div class="form-div-3 clearfix">
                                     <label class="phone notRequired">
                                         <input type="text" placeholder="Telefon" data-constraints="@JustNumbers" class="form-control" name="phone"/>
-                                        <span class="empty-message">*Polje je obavezno</span>
-                                        <span class="error-message">*This is not a valid phone.</span>
                                     </label>
                                 </div>
                             </div>
                             <div class="form-div-4 clearfix">
                                 <label class="message">
                                     <textarea name="message" placeholder="Komentar*" data-constraints='@Required @Length(min=20,max=999999)' class="form-control"></textarea>
-                                    <span class="empty-message">*Polje je obavezno</span>
-                                    <span class="error-message">*The message is too short.</span>
                                 </label>
                             </div>
-                            <div class="btns">
-                                <input class="submitform btn-default btn1" type="submit" name="submitform" value="Posalji" />
+                            <div class="row">
+                                <div class="alert col-sm-4 col-sm-offset-4" id="loading" style="display:none;" role="alert">
+                                    <span>Slanje....</span>
+                                </div>
+                                <div class="alert col-sm-4 col-sm-offset-4" id="form_ajax" style="display:none;" role="alert">
+                                    <span>Poruka poslana.</span>
+                                </div>
+                                <div class="alert col-sm-8 col-sm-offset-2" id="form_ajax_error" style="display:none;" role="alert">
+                                    <span>Greska pri slanju, ime, email i komentar su obavezna polja!</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="btns col-sm-4 col-sm-offset-4">
+                                    <input class="submitform btn-default btn1" type="submit" name="submitform" value="Posalji" />
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -71,3 +75,57 @@
         </div>
     </div>
 {% endblock main_content %}
+
+{% block extra_scripts%}
+    <script src="http://malsup.github.com/min/jquery.form.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            function block_form() {
+                $("#loading").show();
+                $('textarea').attr('disabled', 'disabled');
+                $('input').attr('disabled', 'disabled');
+            }
+
+            function unblock_form() {
+                $('#loading').hide();
+                $('textarea').removeAttr('disabled');
+                $('input').removeAttr('disabled');
+                $('.errorlist').remove();
+            }
+
+            // prepare Options Object for plugin
+            var options = {
+                beforeSubmit: function(form, options) {
+                    // return false to cancel submit
+                    block_form();
+                },
+                success: function() {
+                    unblock_form();
+                    $("#contact-form")[0].reset();
+                    $("#form_ajax").show();
+                    setTimeout(function() {
+                        $("#form_ajax").hide();
+                    }, 5000);
+                },
+                error:  function(resp) {
+                    unblock_form();
+                    $("#form_ajax_error").show();
+                    // render errors in form fields
+                    var errors = JSON.parse(resp.responseText);
+                    for (error in errors) {
+                        var id = '#id_' + error;
+                        $(id).parent('p').prepend(errors[error]);
+                    }
+                    setTimeout(function() {
+                        $("#form_ajax_error").hide();
+                    }, 5000);
+                }
+            };
+
+            $('#contact-form').ajaxForm(options);
+        });
+    </script>
+
+{% endblock extra_scripts %}

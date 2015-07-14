@@ -9,8 +9,9 @@ urlpatterns = patterns('',
                        url(r'^$', IndexView.as_view(), name='index'),
                        url(r'^references/(?P<id>.+?)/$', SingleReferenceView.as_view(), name='reference_id'),
                        url(r'^references/$', ReferencesView.as_view(), name='reference'),
-                       url(r'^contact/send/$', SendMail.as_view(), name='send_email'),
                        url(r'^contact/$', ContactView.as_view(), name='contact'),
+                       url(r'^questions/$', QuestionsView.as_view(), name='questions'),
+                       url(r'^materials/$', MaterialsView.as_view(), name='materials'),
 
                        url(r'^admin/', include(admin.site.urls)),
                        )
